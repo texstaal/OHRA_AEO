@@ -52,7 +52,7 @@ export function Sidebar() {
         <img
           src="/ohra-logo.png"
           alt="OHRA"
-          className="w-full max-w-[160px] h-auto brightness-0 invert mb-2"
+          className="w-full max-w-[160px] h-auto mb-2"
         />
         <div className="text-white/30 text-[10px] font-bold uppercase tracking-widest">GEO Operating System</div>
       </div>
