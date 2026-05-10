@@ -42,19 +42,35 @@ function LayerLabel({ children }: { children: string }) {
   )
 }
 
-export function Sidebar() {
+interface Props {
+  open: boolean
+  onToggle: () => void
+}
+
+export function Sidebar({ open, onToggle }: Props) {
   const pathname = usePathname()
 
   return (
-    <aside className="w-60 min-h-screen bg-[#0f1e33] flex flex-col fixed left-0 top-0 z-40">
-      {/* OHRA Logo */}
-      <div className="px-5 py-4 border-b border-white/10">
-        <img
-          src="/ohra-logo.png"
-          alt="OHRA"
-          className="w-full max-w-[160px] h-auto mb-2"
-        />
-        <div className="text-white/30 text-[10px] font-bold uppercase tracking-widest">GEO Operating System</div>
+    <aside
+      className={`w-60 min-h-screen bg-[#0f1e33] flex flex-col fixed left-0 top-0 z-40 transition-transform duration-300 ease-in-out ${
+        open ? 'translate-x-0' : '-translate-x-full'
+      }`}
+    >
+      {/* OHRA Logo + close button */}
+      <div className="px-5 py-4 border-b border-white/10 flex items-start justify-between gap-2">
+        <div className="flex-1 min-w-0">
+          <img src="/ohra-logo.png" alt="OHRA" className="w-full max-w-[140px] h-auto mb-2" />
+          <div className="text-white/30 text-[10px] font-bold uppercase tracking-widest">GEO Operating System</div>
+        </div>
+        <button
+          onClick={onToggle}
+          className="text-white/30 hover:text-white transition-colors mt-1 flex-shrink-0"
+          aria-label="Close sidebar"
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+          </svg>
+        </button>
       </div>
 
       <nav className="flex-1 px-3 py-4 overflow-y-auto space-y-5">
@@ -77,7 +93,7 @@ export function Sidebar() {
           </div>
         </div>
 
-        {/* Ready to Publish — standalone */}
+        {/* Ready to Publish */}
         <div className="px-1">
           <Link
             href="/ready-to-publish"
