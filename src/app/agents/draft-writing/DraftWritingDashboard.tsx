@@ -3,7 +3,12 @@ import { useState, useEffect } from 'react'
 import { draftOpportunities } from '@/data/agent3Data'
 import { generateDraft } from '@/lib/agent3Generator'
 import { DraftPanel } from '@/components/agent3/DraftPanel'
+import { FinalDraftPanel } from '@/components/agent3/FinalDraftPanel'
+import { processDraft } from '@/lib/finalDraftProcessor'
 import type { ContentDraft, DraftStatus } from '@/types/agent3'
+import type { FinalDraft } from '@/types/finalDraft'
+
+const LS_FINALS = 'agent3_final_drafts'
 
 const LS_STATUSES = 'agent3_draft_statuses'
 const LS_A2       = 'agent2_brief_statuses'
@@ -15,9 +20,10 @@ const gapBadge: Record<string, string> = {
 }
 
 export function DraftWritingDashboard() {
-  const [a2Approved, setA2Approved]     = useState<Set<string>>(new Set())
+  const [a2Approved, setA2Approved]       = useState<Set<string>>(new Set())
   const [draftStatuses, setDraftStatuses] = useState<Record<string, DraftStatus>>({})
-  const [activeDraft, setActiveDraft]   = useState<ContentDraft | null>(null)
+  const [activeDraft, setActiveDraft]     = useState<ContentDraft | null>(null)
+  const [activeFinal, setActiveFinal]     = useState<FinalDraft | null>(null)
 
   useEffect(() => {
     try {
@@ -48,6 +54,17 @@ export function DraftWritingDashboard() {
     try { localStorage.setItem(LS_STATUSES, JSON.stringify(next)) } catch { /* ignore */ }
   }
 
+  function handleProcessFinal() {
+    if (!activeDraft) return
+    const fd = processDraft(activeDraft)
+    // Persist so the result survives navigation
+    try {
+      const existing = JSON.parse(localStorage.getItem(LS_FINALS) ?? '{}')
+      localStorage.setItem(LS_FINALS, JSON.stringify({ ...existing, [fd.opportunityId]: fd }))
+    } catch { /* ignore */ }
+    setActiveFinal(fd)
+  }
+
   const sorted = [...draftOpportunities].sort((a, b) => {
     const aA = a2Approved.has(a.id) ? 1 : 0
     const bA = a2Approved.has(b.id) ? 1 : 0
@@ -74,11 +91,14 @@ export function DraftWritingDashboard() {
         </div>
       </div>
 
-      {activeDraft ? (
+      {activeFinal ? (
+        <FinalDraftPanel finalDraft={activeFinal} onClose={() => setActiveFinal(null)} />
+      ) : activeDraft ? (
         <DraftPanel
           draft={activeDraft}
           onStatusChange={handleStatusChange}
-          onClose={() => setActiveDraft(null)}
+          onClose={() => { setActiveDraft(null); setActiveFinal(null) }}
+          onProcessFinal={handleProcessFinal}
         />
       ) : (
         <div className="space-y-6">
