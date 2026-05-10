@@ -1,0 +1,56 @@
+import type { PipelineStep } from '@/types'
+
+export const pipelineSteps: PipelineStep[] = [
+  {
+    id: 1,
+    label: 'Trend Discovered',
+    agent: 'Agent 1',
+    agentNumber: 1,
+    humanReview: 'Marketing review',
+    status: 'done',
+    color: 'navy',
+  },
+  {
+    id: 2,
+    label: 'Brief Created',
+    agent: 'Agent 2',
+    agentNumber: 2,
+    humanReview: 'Content strategy review',
+    status: 'done',
+    color: 'navy',
+  },
+  {
+    id: 3,
+    label: 'Draft Written',
+    agent: 'Agent 3',
+    agentNumber: 3,
+    humanReview: 'Editor review',
+    status: 'active',
+    color: 'blue',
+  },
+  {
+    id: 4,
+    label: 'Compliance Check',
+    agent: 'Agent 4',
+    agentNumber: 4,
+    humanReview: 'Compliance/legal review',
+    status: 'pending',
+    color: 'orange',
+  },
+  {
+    id: 5,
+    label: 'Technical GEO Check',
+    agent: 'Agent 5',
+    agentNumber: 5,
+    humanReview: 'Technical review',
+    status: 'pending',
+    color: 'purple',
+  },
+  {
+    id: 6,
+    label: 'Published',
+    humanReview: 'Human approved',
+    status: 'pending',
+    color: 'green',
+  },
+]

@@ -1,0 +1,55 @@
+import type { AEOPlatformScore } from '@/types'
+
+export const aeoScores: AEOPlatformScore[] = [
+  {
+    platform: 'OpenAI',
+    overall: 48,
+    maxOverall: 100,
+    brandRecognition: 8,
+    brandRecognitionMax: 20,
+    marketScore: 3,
+    marketScoreMax: 10,
+    presenceQuality: 11,
+    presenceQualityMax: 20,
+    brandSentiment: 25,
+    brandSentimentMax: 40,
+    shareOfVoice: 1,
+    shareOfVoiceMax: 10,
+  },
+  {
+    platform: 'Perplexity',
+    overall: 57,
+    maxOverall: 100,
+    brandRecognition: 8,
+    brandRecognitionMax: 20,
+    marketScore: 5,
+    marketScoreMax: 10,
+    presenceQuality: 14,
+    presenceQualityMax: 20,
+    brandSentiment: 29,
+    brandSentimentMax: 40,
+    shareOfVoice: 1,
+    shareOfVoiceMax: 10,
+  },
+  {
+    platform: 'Gemini',
+    overall: 62,
+    maxOverall: 100,
+    brandRecognition: 13,
+    brandRecognitionMax: 20,
+    marketScore: 5,
+    marketScoreMax: 10,
+    presenceQuality: 14,
+    presenceQualityMax: 20,
+    brandSentiment: 29,
+    brandSentimentMax: 40,
+    shareOfVoice: 1,
+    shareOfVoiceMax: 10,
+  },
+]
+
+export const platformColors: Record<string, { bg: string; border: string; text: string; bar: string }> = {
+  OpenAI:     { bg: 'bg-slate-50',  border: 'border-slate-200', text: 'text-slate-700',  bar: 'bg-slate-500' },
+  Perplexity: { bg: 'bg-blue-50',   border: 'border-blue-200',  text: 'text-blue-700',   bar: 'bg-blue-500' },
+  Gemini:     { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-indigo-700', bar: 'bg-indigo-500' },
+}

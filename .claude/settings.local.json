@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm show *)",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\);const v=JSON.parse\\(d\\);const stable=v.filter\\(x=>!x.includes\\('canary'\\)&&!x.includes\\('beta'\\)&&!x.includes\\('rc'\\)\\);console.log\\(stable.slice\\(-5\\).join\\('\\\\n'\\)\\)\")",
+      "Bash(npm audit *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(node -e ' *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git config *)"
+    ]
+  }
+}
