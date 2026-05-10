@@ -173,7 +173,7 @@ export function ContentOpportunitiesTab({ themes, reviewStatuses, onStatusChange
                 </div>
                 <div>
                   <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">
-                    🤖 Why This Helps GEO / AEO
+                    🤖 Why This Helps GEO
                   </div>
                   <p className="text-xs text-gray-600 leading-relaxed">{rec.geoReason}</p>
                 </div>

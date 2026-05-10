@@ -29,7 +29,7 @@ export function ScoreCard({ score }: { score: AEOPlatformScore }) {
       <div className="flex items-center justify-between">
         <div>
           <div className={`font-bold text-base ${c.text}`}>{score.platform}</div>
-          <div className="text-xs text-gray-500">HubSpot AEO Grader</div>
+          <div className="text-xs text-gray-500">HubSpot GEO Grader</div>
         </div>
         <div className="text-right">
           <div className={`text-3xl font-bold ${c.text}`}>{score.overall}</div>

@@ -23,7 +23,7 @@ function buildComparison(current: AEOEntry, prev: AEOEntry): WeekComparison {
   const biggest = [...subDeltas].sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta))[0]
   const biggestDir = biggest.delta > 0 ? 'improved' : biggest.delta < 0 ? 'declined' : 'unchanged'
 
-  let analysis = `This week, OHRA's AEO score ${dir} (${prev.total} → ${current.total}). `
+  let analysis = `This week, OHRA's GEO score ${dir} (${prev.total} → ${current.total}). `
   if (biggest.delta !== 0) {
     analysis += `The largest movement was in ${biggest.label}, which ${biggestDir} by ${Math.abs(biggest.delta)} point${Math.abs(biggest.delta) !== 1 ? 's' : ''}. `
   }
@@ -71,7 +71,7 @@ function exportToCSV(entries: AEOEntry[]): string {
 function exportToMarkdown(entries: AEOEntry[], cmp: WeekComparison | null): string {
   const latest = entries[entries.length - 1]
   const lines = [
-    '# OHRA Weekly AEO Score Report',
+    '# OHRA Weekly GEO Score Report',
     `**Company:** OHRA | **Location:** Netherlands | **Product:** Car Insurance`,
     `**Latest entry:** ${latest?.date ?? '—'} | **Score:** ${latest?.total ?? '—'}/100`,
     '',
@@ -202,9 +202,9 @@ export function AEOTrackingDashboard() {
           <span className="text-2xl">📊</span>
         </div>
         <div>
-          <h1 className="text-xl font-bold text-gray-900">Agent 8 — Weekly AEO Score Tracking</h1>
+          <h1 className="text-xl font-bold text-gray-900">Agent 8 — Weekly GEO Score Tracking</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            Is OHRA's AEO visibility improving or declining compared to last week?
+            Is OHRA&apos;s GEO visibility improving or declining compared to last week?
           </p>
         </div>
         <div className="ml-auto flex items-center gap-2">
@@ -217,7 +217,7 @@ export function AEOTrackingDashboard() {
             ↓ Markdown
           </button>
           <span className="px-2.5 py-1 bg-blue-50 border border-blue-200 text-blue-700 rounded-full text-xs font-semibold">
-            Layer 3 — AEO Tracking
+            Layer 2 — GEO Tracking
           </span>
         </div>
       </div>
@@ -227,14 +227,14 @@ export function AEOTrackingDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Company card */}
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">HubSpot AEO Grader Setup</div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">HubSpot GEO Grader Setup</div>
             <div className="space-y-1.5 text-sm">
               {[
                 ['Company', 'OHRA'],
                 ['Location', 'Netherlands'],
                 ['Product / Service', 'Car Insurance'],
                 ['Industry', 'Insurance'],
-                ['Grader URL', 'hubspot.com/aeo-grader'],
+                ['Grader URL', 'hubspot.com/geo-grader'],
               ].map(([k, v]) => (
                 <div key={k} className="flex gap-2">
                   <span className="text-gray-400 w-36 flex-shrink-0">{k}</span>
@@ -243,14 +243,14 @@ export function AEOTrackingDashboard() {
               ))}
             </div>
             <p className="text-xs text-gray-400 mt-4 italic">
-              Visit the HubSpot AEO Grader, enter the details above, and manually record the scores below each week.
+              Visit the HubSpot GEO Grader, enter the details above, and manually record the scores below each week.
             </p>
           </div>
 
           {/* Latest score card */}
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-              Latest AEO Score {latest ? `— ${latest.date}` : ''}
+              Latest GEO Score {latest ? `— ${latest.date}` : ''}
             </div>
             {latest ? (
               <>
@@ -312,7 +312,7 @@ export function AEOTrackingDashboard() {
         {/* Chart */}
         {sorted.length >= 2 && (
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Total AEO Score Trend</div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Total GEO Score Trend</div>
             <ScoreChart entries={sorted} />
           </div>
         )}
@@ -423,7 +423,7 @@ export function AEOTrackingDashboard() {
               { icon: '⚙️', label: 'Agent 5', note: 'technical',    bg: 'bg-teal-700' },
               { icon: '📡', label: 'Agent 6', note: 'earned media', bg: 'bg-amber-600' },
               { icon: '🔄', label: 'Agent 7', note: 'freshness',    bg: 'bg-emerald-700' },
-              { icon: '📊', label: 'Agent 8', note: 'AEO tracking', bg: 'bg-[#1e3a5f]', active: true },
+              { icon: '📊', label: 'Agent 8', note: 'GEO tracking', bg: 'bg-[#1e3a5f]', active: true },
             ].map((step, i, arr) => (
               <div key={step.label} className="flex items-center gap-2">
                 <div className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-white text-xs font-medium ${step.bg} ${(step as { active?: boolean }).active ? 'ring-2 ring-blue-300' : ''}`}>

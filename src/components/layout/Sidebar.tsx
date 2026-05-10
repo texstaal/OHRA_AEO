@@ -11,9 +11,9 @@ const layer1 = [
 ]
 
 const layer2 = [
-  { href: '/agents/earned-media', label: 'Earned Media', num: '06', dot: 'bg-green-600' },
-  { href: '/agents/freshness',    label: 'Freshness',    num: '07', dot: 'bg-purple-700' },
-  { href: '/agents/aeo-tracking', label: 'AEO Tracking', num: '08', dot: 'bg-sky-700' },
+  { href: '/agents/earned-media', label: 'Earned Media',  num: '06', dot: 'bg-green-600' },
+  { href: '/agents/freshness',    label: 'Freshness',     num: '07', dot: 'bg-purple-700' },
+  { href: '/agents/aeo-tracking', label: 'GEO Tracking',  num: '08', dot: 'bg-sky-700' },
 ]
 
 function NavLink({ href, label, num, dot, pathname }: { href: string; label: string; num: string; dot: string; pathname: string }) {
@@ -47,17 +47,26 @@ export function Sidebar() {
 
   return (
     <aside className="w-60 min-h-screen bg-[#0f1e33] flex flex-col fixed left-0 top-0 z-40">
-      {/* Logo */}
-      <div className="px-5 py-5 border-b border-white/10">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-            <span className="text-white text-sm font-bold">O</span>
-          </div>
-          <div>
-            <div className="text-white font-bold text-sm leading-tight">OHRA GEO OS</div>
-            <div className="text-white/40 text-xs">Operating System</div>
-          </div>
+      {/* OHRA Logo */}
+      <div className="px-5 py-4 border-b border-white/10">
+        <div className="flex items-center gap-2 mb-1.5">
+          {/* Concentric-ring O */}
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+            <circle cx="16" cy="16" r="14" stroke="white" strokeWidth="4.5"/>
+            <circle cx="16" cy="16" r="7.5" stroke="white" strokeWidth="3.5"/>
+            <circle cx="16" cy="16" r="3" fill="white"/>
+          </svg>
+          {/* HRA text */}
+          <span
+            className="text-white leading-none tracking-wide"
+            style={{ fontSize: 26, fontWeight: 900, fontFamily: "'Arial Black', 'Arial Bold', Arial, sans-serif" }}
+          >
+            HRA
+          </span>
         </div>
+        {/* Red underline */}
+        <div className="h-[4px] bg-[#E8363A] rounded-sm mb-2" />
+        <div className="text-white/30 text-[10px] font-bold uppercase tracking-widest">GEO Operating System</div>
       </div>
 
       <nav className="flex-1 px-3 py-4 overflow-y-auto space-y-5">

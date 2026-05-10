@@ -219,7 +219,7 @@ export function BriefPanel({ brief, onStatusChange, onClose }: Props) {
       </SectionCard>
 
       {/* Section 11 — GEO Checklist */}
-      <SectionCard title="11 · GEO / AEO Optimization Checklist" icon="📊">
+      <SectionCard title="11 · GEO Optimization Checklist" icon="📊">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {brief.geoChecklist.map((item, i) => (
             <div key={i} className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">

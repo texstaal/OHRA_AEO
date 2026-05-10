@@ -10,7 +10,8 @@ const pageLabels: Record<string, { title: string; subtitle: string }> = {
   '/agents/technical-geo':    { title: 'Agent 5 — Technical GEO',    subtitle: 'Schema, metadata, FAQ structure, and machine readability' },
   '/agents/earned-media':     { title: 'Agent 6 — Earned Media',     subtitle: 'Third-party mentions, share of voice, and visibility gaps' },
   '/agents/freshness':        { title: 'Agent 7 — Freshness',        subtitle: 'Outdated page detection and update recommendations' },
-  '/agents/aeo-tracking':     { title: 'Agent 8 — AEO Tracking',     subtitle: 'Weekly AEO score tracking across AI platforms' },
+  '/agents/aeo-tracking':     { title: 'Agent 8 — GEO Tracking',     subtitle: 'Weekly GEO score tracking across AI platforms' },
+  '/ready-to-publish':        { title: 'Ready to Publish',            subtitle: 'Articles approved through the full GEO pipeline' },
 }
 
 export function Header() {

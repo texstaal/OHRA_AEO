@@ -51,7 +51,7 @@ export function AEOScoreSection() {
       {/* Total score card */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex flex-col justify-between">
         <div>
-          <div className="text-xs text-gray-400 font-medium mb-1">Total AEO Score</div>
+          <div className="text-xs text-gray-400 font-medium mb-1">Total GEO Score</div>
           <div className="flex items-baseline gap-2">
             <span className="text-4xl font-bold text-gray-900">{latest.total}</span>
             <span className="text-gray-400 text-sm">/ 100</span>
@@ -69,7 +69,7 @@ export function AEOScoreSection() {
         </div>
         <div className="mt-4 pt-4 border-t border-gray-50">
           <div className="text-xs text-gray-400">Week of {weekLabel}</div>
-          <div className="text-xs text-gray-400">HubSpot AEO Grader · OHRA · Netherlands</div>
+          <div className="text-xs text-gray-400">HubSpot GEO Grader · OHRA · Netherlands</div>
         </div>
       </div>
 

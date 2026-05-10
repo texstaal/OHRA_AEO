@@ -25,11 +25,11 @@ export default function OverviewPage() {
         </div>
       </section>
 
-      {/* AEO Scores — live from Agent 8 localStorage */}
+      {/* GEO Scores — live from Agent 8 localStorage */}
       <section>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-            AEO Score Overview — HubSpot AEO Grader
+            GEO Score Overview — HubSpot GEO Grader
           </h2>
           <span className="text-xs text-gray-400">Tracked weekly via Agent 8</span>
         </div>
@@ -100,7 +100,7 @@ export default function OverviewPage() {
             {[
               { icon: '📈', label: 'Performance Data', color: 'bg-blue-50 border-blue-200 text-blue-700' },
               { icon: '🔍', label: 'Market Trends',    color: 'bg-indigo-50 border-indigo-200 text-indigo-700' },
-              { icon: '📊', label: 'AEO Insights',     color: 'bg-purple-50 border-purple-200 text-purple-700' },
+              { icon: '📊', label: 'GEO Insights',     color: 'bg-purple-50 border-purple-200 text-purple-700' },
               { icon: '🤝', label: 'Earned Media Data', color: 'bg-green-50 border-green-200 text-green-700' },
             ].map((item) => (
               <div key={item.label} className={`flex items-center gap-2 px-4 py-2.5 rounded-lg border ${item.color}`}>

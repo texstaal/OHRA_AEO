@@ -197,7 +197,7 @@ export function DraftPanel({ draft, onStatusChange, onClose }: Props) {
 
       {/* GEO checklist + compliance side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <Card title="GEO / AEO Optimization — Why This Draft Works" icon="📡">
+        <Card title="GEO Optimization — Why This Draft Works" icon="📡">
           <div className="space-y-2">
             {draft.geoItems.map((item, i) => (
               <div key={i} className="border border-gray-100 rounded-lg p-2.5">
