@@ -208,7 +208,7 @@ export function FinalDraftPanel({ finalDraft: fd, onClose }: Props) {
       <div className="bg-gradient-to-r from-green-700 to-teal-700 rounded-xl p-5 text-white">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="text-white/60 text-xs font-semibold uppercase tracking-wide mb-1">Final Draft — Auto-processed</div>
+            <div className="text-white/60 text-xs font-semibold uppercase tracking-wide mb-1">Final Draft — Pipeline Complete</div>
             <h2 className="text-xl font-bold leading-snug">{fd.processedDraft.h1}</h2>
             <div className="text-white/60 text-xs mt-1">
               Processed {new Date(fd.processedAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}
@@ -216,11 +216,33 @@ export function FinalDraftPanel({ finalDraft: fd, onClose }: Props) {
           </div>
           <button onClick={onClose} className="text-white/50 hover:text-white text-sm transition-colors flex-shrink-0">← Back to draft</button>
         </div>
+
+        {/* Agent pipeline strip */}
+        <div className="mt-4 pt-4 border-t border-white/10">
+          <div className="text-white/50 text-xs mb-2 font-semibold uppercase tracking-wider">Agents that ran on this draft</div>
+          <div className="flex items-center gap-2 flex-wrap">
+            {[
+              { icon: '✍️', label: 'Agent 3', note: 'drafted', bg: 'bg-white/10' },
+              { icon: '⚖️', label: 'Agent 4', note: 'compliance fixed', bg: 'bg-white/20', highlight: true },
+              { icon: '⚙️', label: 'Agent 5', note: 'technical GEO', bg: 'bg-white/20', highlight: true },
+              { icon: '✅', label: 'Final',   note: 'publish-ready', bg: 'bg-white/10' },
+            ].map((step, i, arr) => (
+              <div key={step.label} className="flex items-center gap-2">
+                <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-white text-xs font-semibold ${step.bg} ${step.highlight ? 'ring-1 ring-white/40' : ''}`}>
+                  <span>{step.icon}</span> {step.label}
+                  <span className="text-white/60 font-normal">{step.note}</span>
+                </div>
+                {i < arr.length - 1 && <span className="text-white/30 text-xs">→</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Score summary */}
         <div className="grid grid-cols-3 gap-3 mt-4 pt-4 border-t border-white/10">
           <div className="text-center">
             <div className="text-2xl font-bold">{fixCount}</div>
-            <div className="text-xs text-white/60">compliance fixes</div>
+            <div className="text-xs text-white/60">Agent 4 fixes</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold">{fd.placeholderCount}</div>
@@ -228,7 +250,7 @@ export function FinalDraftPanel({ finalDraft: fd, onClose }: Props) {
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold">{fd.techScore}</div>
-            <div className="text-xs text-white/60">technical GEO score</div>
+            <div className="text-xs text-white/60">Agent 5 GEO score</div>
           </div>
         </div>
       </div>
@@ -237,9 +259,9 @@ export function FinalDraftPanel({ finalDraft: fd, onClose }: Props) {
       <div className="bg-green-50 border border-green-200 rounded-xl px-5 py-3 flex items-center gap-3">
         <span className="text-green-600 text-lg">✓</span>
         <div className="text-sm text-green-700">
-          <strong>{fixCount} compliance issue{fixCount !== 1 ? 's' : ''} auto-fixed</strong>
+          <strong>Agent 4</strong> fixed {fixCount} compliance issue{fixCount !== 1 ? 's' : ''}
           {highFixes > 0 && ` (${highFixes} High severity)`}
-          {' '}· Risk issues reduced from <strong>{fd.preFixIssueCount}</strong> to <strong>{fd.postFixIssueCount}</strong>
+          {' '}· <strong>Agent 5</strong> generated schemas & metadata · Risk reduced from <strong>{fd.preFixIssueCount}</strong> to <strong>{fd.postFixIssueCount}</strong>
           {fd.placeholderCount > 0 && ` · ${fd.placeholderCount} [PLACEHOLDER] item${fd.placeholderCount !== 1 ? 's' : ''} still need human input`}
         </div>
         <div className="ml-auto">
@@ -272,25 +294,34 @@ export function FinalDraftPanel({ finalDraft: fd, onClose }: Props) {
         <div className="space-y-5">
           {/* Score comparison */}
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Score Impact</div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Overall Impact</div>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center bg-red-50 rounded-xl p-4">
-                <div className="text-xs text-gray-500 mb-1">Before processing</div>
+                <div className="text-xs text-gray-500 mb-1">Before pipeline</div>
                 <div className="text-3xl font-bold text-red-600">{fd.preFixIssueCount}</div>
                 <div className="text-xs text-gray-400">compliance issues</div>
               </div>
               <div className="text-center bg-green-50 rounded-xl p-4">
-                <div className="text-xs text-gray-500 mb-1">After processing</div>
+                <div className="text-xs text-gray-500 mb-1">After pipeline</div>
                 <div className="text-3xl font-bold text-green-600">{fd.postFixIssueCount}</div>
                 <div className="text-xs text-gray-400">issues remaining</div>
               </div>
             </div>
           </div>
 
-          {/* Compliance fixes */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
-              Compliance Fixes Applied ({fd.complianceFixes.length})
+          {/* Agent 4 — Compliance */}
+          <div className="bg-white rounded-xl border-2 border-orange-100 shadow-sm p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+                <span className="text-white text-sm">⚖️</span>
+              </div>
+              <div>
+                <div className="text-sm font-bold text-gray-900">Agent 4 — Compliance & Brand Safety</div>
+                <div className="text-xs text-gray-400">Auto-replaced risky phrases with compliant alternatives</div>
+              </div>
+              <span className="ml-auto text-xs font-bold text-orange-600 bg-orange-50 border border-orange-200 rounded-full px-2.5 py-0.5">
+                {fd.complianceFixes.length} fix{fd.complianceFixes.length !== 1 ? 'es' : ''}
+              </span>
             </div>
             {fd.complianceFixes.length === 0 ? (
               <p className="text-sm text-green-600 font-medium">✓ No risky phrases detected in this draft.</p>
@@ -318,23 +349,29 @@ export function FinalDraftPanel({ finalDraft: fd, onClose }: Props) {
                 ))}
               </div>
             )}
-
             {fd.placeholderCount > 0 && (
               <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-4">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-amber-600 font-bold text-xs">⚠ NOT AUTO-FIXED</span>
-                </div>
-                <p className="text-xs text-amber-700">
-                  <strong>{fd.placeholderCount} [PLACEHOLDER]</strong> item{fd.placeholderCount !== 1 ? 's' : ''} require manual input — prices, URLs, and policy-specific data cannot be auto-generated and must be filled in by the OHRA product team.
+                <span className="text-amber-600 font-bold text-xs">⚠ NOT AUTO-FIXED BY AGENT 4</span>
+                <p className="text-xs text-amber-700 mt-1">
+                  <strong>{fd.placeholderCount} [PLACEHOLDER]</strong> item{fd.placeholderCount !== 1 ? 's' : ''} require manual input — prices, URLs, and policy-specific data cannot be auto-generated and must be filled in by the OHRA product team before publishing.
                 </p>
               </div>
             )}
           </div>
 
-          {/* Technical improvements */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
-              Technical GEO Improvements ({fd.technicalImprovements.length})
+          {/* Agent 5 — Technical GEO */}
+          <div className="bg-white rounded-xl border-2 border-blue-100 shadow-sm p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center flex-shrink-0">
+                <span className="text-white text-sm">⚙️</span>
+              </div>
+              <div>
+                <div className="text-sm font-bold text-gray-900">Agent 5 — Technical GEO</div>
+                <div className="text-xs text-gray-400">Generated schemas, metadata, and structural GEO improvements</div>
+              </div>
+              <span className="ml-auto text-xs font-bold text-blue-600 bg-blue-50 border border-blue-200 rounded-full px-2.5 py-0.5">
+                Score: {fd.techScore}/100
+              </span>
             </div>
             <div className="space-y-2">
               {fd.technicalImprovements.map((item, i) => (
@@ -356,6 +393,14 @@ export function FinalDraftPanel({ finalDraft: fd, onClose }: Props) {
       {/* ── SCHEMA & METADATA ───────────────────────────────────────────── */}
       {activeTab === 'Schema & Metadata' && (
         <div className="space-y-4">
+          <div className="bg-blue-50 border border-blue-100 rounded-xl px-5 py-3 flex items-center gap-3">
+            <div className="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center flex-shrink-0">
+              <span className="text-white text-sm">⚙️</span>
+            </div>
+            <p className="text-xs text-blue-700">
+              <strong>Agent 5 — Technical GEO</strong> generated all metadata and JSON-LD schemas below. These are ready to be injected into the page &lt;head&gt; on publish.
+            </p>
+          </div>
           {/* Metadata */}
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Generated Metadata</div>
