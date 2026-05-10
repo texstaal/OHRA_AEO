@@ -49,23 +49,11 @@ export function Sidebar() {
     <aside className="w-60 min-h-screen bg-[#0f1e33] flex flex-col fixed left-0 top-0 z-40">
       {/* OHRA Logo */}
       <div className="px-5 py-4 border-b border-white/10">
-        <div className="flex items-center gap-2 mb-1.5">
-          {/* Concentric-ring O */}
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-            <circle cx="16" cy="16" r="14" stroke="white" strokeWidth="4.5"/>
-            <circle cx="16" cy="16" r="7.5" stroke="white" strokeWidth="3.5"/>
-            <circle cx="16" cy="16" r="3" fill="white"/>
-          </svg>
-          {/* HRA text */}
-          <span
-            className="text-white leading-none tracking-wide"
-            style={{ fontSize: 26, fontWeight: 900, fontFamily: "'Arial Black', 'Arial Bold', Arial, sans-serif" }}
-          >
-            HRA
-          </span>
-        </div>
-        {/* Red underline */}
-        <div className="h-[4px] bg-[#E8363A] rounded-sm mb-2" />
+        <img
+          src="/ohra-logo.png"
+          alt="OHRA"
+          className="w-full max-w-[160px] h-auto brightness-0 invert mb-2"
+        />
         <div className="text-white/30 text-[10px] font-bold uppercase tracking-widest">GEO Operating System</div>
       </div>
 
