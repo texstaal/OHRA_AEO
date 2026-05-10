@@ -30,10 +30,9 @@ interface Props {
   draft: ContentDraft
   onStatusChange: (s: DraftStatus) => void
   onClose: () => void
-  onProcessFinal?: () => void
 }
 
-export function DraftPanel({ draft, onStatusChange, onClose, onProcessFinal }: Props) {
+export function DraftPanel({ draft, onStatusChange, onClose }: Props) {
   function download() {
     const md = draftToMarkdown(draft)
     const blob = new Blob([md], { type: 'text/markdown;charset=utf-8;' })
@@ -95,21 +94,21 @@ export function DraftPanel({ draft, onStatusChange, onClose, onProcessFinal }: P
         </p>
       </div>
 
-      {/* Auto-process banner — only shown when approved */}
-      {draft.status === 'Approved' && onProcessFinal && (
+      {/* Agent 4 handoff banner — shown when approved */}
+      {draft.status === 'Approved' && (
         <div className="bg-green-50 border border-green-200 rounded-xl px-5 py-4 flex items-center gap-4">
           <div className="flex-1">
-            <div className="text-sm font-bold text-green-800 mb-0.5">Draft approved — ready for automatic processing</div>
+            <div className="text-sm font-bold text-green-800 mb-0.5">✓ Draft approved — ready for compliance review</div>
             <div className="text-xs text-green-600">
-              Runs compliance auto-fix (Agent 4) + technical GEO improvements (Agent 5) and generates the final publish-ready preview.
+              This draft is now available in <strong>Agent 4 — Compliance</strong>. Go there to review the auto-applied compliance fixes, edit if needed, and pass it to Agent 5.
             </div>
           </div>
-          <button
-            onClick={onProcessFinal}
-            className="flex-shrink-0 px-5 py-2.5 bg-green-700 text-white text-sm font-bold rounded-xl hover:bg-green-800 transition-colors shadow-sm"
+          <a
+            href="/agents/compliance"
+            className="flex-shrink-0 px-4 py-2 bg-green-700 text-white text-xs font-bold rounded-xl hover:bg-green-800 transition-colors shadow-sm whitespace-nowrap"
           >
-            ⚡ Process Final Draft →
-          </button>
+            Go to Agent 4 →
+          </a>
         </div>
       )}
 
