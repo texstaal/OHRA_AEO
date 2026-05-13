@@ -6,6 +6,7 @@ import { BriefPanel } from '@/components/agent2/BriefPanel'
 import type { ContentBrief, BriefStatus, SampleOpportunity } from '@/types/agent2'
 
 const LS_STATUSES = 'agent2_brief_statuses'
+const LS_EDITS    = 'agent2_edited_briefs'
 const LS_A1       = 'agent1_review_statuses'
 
 const gapBadge: Record<string, string> = {
@@ -25,6 +26,7 @@ const intentColor: Record<string, string> = {
 export function ContentBriefsDashboard() {
   const [agent1Approved, setAgent1Approved]   = useState<Set<string>>(new Set())
   const [briefStatuses, setBriefStatuses]     = useState<Record<string, BriefStatus>>({})
+  const [briefEdits, setBriefEdits]           = useState<Record<string, Partial<ContentBrief>>>({})
   const [activeBrief, setActiveBrief]         = useState<ContentBrief | null>(null)
   const [selectedOpp, setSelectedOpp]         = useState<SampleOpportunity | null>(null)
 
@@ -41,15 +43,29 @@ export function ContentBriefsDashboard() {
       const s = localStorage.getItem(LS_STATUSES)
       if (s) setBriefStatuses(JSON.parse(s))
     } catch { /* ignore */ }
+
+    try {
+      const e = localStorage.getItem(LS_EDITS)
+      if (e) setBriefEdits(JSON.parse(e))
+    } catch { /* ignore */ }
   }, [])
 
   function handleGenerate(opp: SampleOpportunity) {
     const existingStatus = briefStatuses[opp.id] ?? 'Draft'
-    const brief = generateBrief(opp.id, existingStatus)
-    if (brief) {
-      setActiveBrief(brief)
+    const generated = generateBrief(opp.id, existingStatus)
+    if (generated) {
+      const saved = briefEdits[opp.id]
+      setActiveBrief(saved ? { ...generated, ...saved } : generated)
       setSelectedOpp(opp)
     }
+  }
+
+  function handleBriefEdit(edits: Partial<ContentBrief>) {
+    if (!activeBrief) return
+    const next = { ...briefEdits, [activeBrief.opportunityId]: edits }
+    setBriefEdits(next)
+    setActiveBrief({ ...activeBrief, ...edits })
+    try { localStorage.setItem(LS_EDITS, JSON.stringify(next)) } catch { /* ignore */ }
   }
 
   function handleStatusChange(status: BriefStatus) {
@@ -94,6 +110,7 @@ export function ContentBriefsDashboard() {
           brief={activeBrief}
           onStatusChange={handleStatusChange}
           onClose={() => { setActiveBrief(null); setSelectedOpp(null) }}
+          onBriefEdit={handleBriefEdit}
         />
       ) : (
         /* ── Opportunity selector ── */
@@ -127,6 +144,7 @@ export function ContentBriefsDashboard() {
                 const isA1Approved   = agent1Approved.has(opp.themeId)
                 const briefStatus    = briefStatuses[opp.id]
                 const hasBrief       = !!briefStatus
+                const hasEdits       = !!briefEdits[opp.id]
 
                 return (
                   <div
@@ -164,9 +182,14 @@ export function ContentBriefsDashboard() {
 
                     {/* Brief status */}
                     {hasBrief && (
-                      <div className="text-xs text-gray-500 flex items-center gap-1.5">
+                      <div className="text-xs text-gray-500 flex items-center gap-1.5 flex-wrap">
                         <span className="w-2 h-2 rounded-full bg-blue-400" />
                         Brief status: <strong>{briefStatus}</strong>
+                        {hasEdits && (
+                          <span className="px-1.5 py-0.5 bg-blue-100 text-blue-600 border border-blue-200 rounded text-xs font-semibold">
+                            ✏️ Edited
+                          </span>
+                        )}
                       </div>
                     )}
 
