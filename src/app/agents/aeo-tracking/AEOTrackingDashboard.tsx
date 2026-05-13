@@ -3,7 +3,9 @@ import { useState, useMemo } from 'react'
 import { seedEntries } from '@/data/agent8Data'
 import type { AEOEntry, WeekComparison } from '@/types/agent8'
 
-const LS_KEY = 'agent8_aeo_entries'
+const LS_KEY      = 'agent8_aeo_entries'
+const LS_VERSION  = 'agent8_aeo_version'
+const DATA_VER    = '2'   // bump to reset stale localStorage on next load
 
 // ── Score comparison logic ────────────────────────────────────────────────────
 
@@ -144,6 +146,10 @@ function download(content: string, filename: string) {
 
 function loadEntries(): AEOEntry[] {
   try {
+    if (localStorage.getItem(LS_VERSION) !== DATA_VER) {
+      localStorage.removeItem(LS_KEY)
+      localStorage.setItem(LS_VERSION, DATA_VER)
+    }
     const stored = JSON.parse(localStorage.getItem(LS_KEY) ?? 'null')
     if (Array.isArray(stored) && stored.length > 0) return stored
   } catch { /* ignore */ }

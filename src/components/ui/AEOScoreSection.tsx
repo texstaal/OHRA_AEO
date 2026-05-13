@@ -5,6 +5,7 @@ import type { AEOEntry } from '@/types/agent8'
 
 function loadEntries(): AEOEntry[] {
   try {
+    if (localStorage.getItem('agent8_aeo_version') !== '2') return seedEntries
     const stored = JSON.parse(localStorage.getItem('agent8_aeo_entries') ?? 'null')
     if (Array.isArray(stored) && stored.length > 0) return stored
   } catch { /* ignore */ }
